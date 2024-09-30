@@ -6,6 +6,7 @@ import * as joi from 'joi';
 interface EnvVars {
   /** Variables de entorno */
   PORT: number;
+  STRIPE_SECRET_KEY: string;
 }
 
 // Definiendo el esquema para validar las variables de entorno
@@ -13,6 +14,7 @@ const envsSchema = joi
   .object({
     /** Validaciones */
     PORT: joi.number().required(),
+    STRIPE_SECRET_KEY: joi.string().required(),
   })
   .unknown(true);
 
@@ -30,4 +32,5 @@ const envVars: EnvVars = value;
 // Exportar las variables de entorno validadas
 export const envs = {
   port: envVars.PORT,
+  stripeSecretKey: envVars.STRIPE_SECRET_KEY,
 };
