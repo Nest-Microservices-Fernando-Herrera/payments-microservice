@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import Stripe from 'stripe';
+import { Request, Response } from 'express';
 import { envs } from 'src/config';
 import { PaymentSessionDto } from './dto/payment-session.dto';
 
@@ -40,5 +41,13 @@ export class PaymentsService {
       cancel_url: 'http://localhost:3003/payments/cancel',
     });
     return session;
+  }
+
+  // Método para poder comunicarnos con el Webhook
+  async stripeWebHook(req: Request, res: Response) {
+    const sig = req.headers['stripe-signature'];
+    console.log({ sig });
+
+    return res.status(200).json({ sig });
   }
 }

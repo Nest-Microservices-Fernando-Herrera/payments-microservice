@@ -6,7 +6,9 @@ import { envs } from './config';
 async function bootstrap() {
   const logger = new Logger('PaymentsMS-Main');
 
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    rawBody: true,
+  });
 
   // Configuración global de los pipes
   app.useGlobalPipes(
