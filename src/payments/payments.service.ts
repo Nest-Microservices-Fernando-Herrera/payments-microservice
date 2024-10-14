@@ -43,11 +43,27 @@ export class PaymentsService {
     return session;
   }
 
-  // Método para poder comunicarnos con el Webhook
+  // Método para poder comunicarnos con el Webhook (de forma local)
   async stripeWebHook(req: Request, res: Response) {
     const sig = req.headers['stripe-signature'];
     console.log({ sig });
 
+    let event: Stripe.Event;
+    const endpointSecret =
+      'whsec_4b800967798a26793ed40d86ed9147c60e9b1550bc9cd5549442f16979c970e1';
+
+    try {
+      event = this.stripe.webhooks.constructEvent(
+        req['rawBody'],
+        sig,
+        endpointSecret,
+      );
+    } catch (err) {
+      res.status(400).send(`Webhook Error: ${err.message}`);
+      return;
+    }
+
+    console.log({ event });
     return res.status(200).json({ sig });
   }
 }
