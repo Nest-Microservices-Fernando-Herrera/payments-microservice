@@ -7,6 +7,9 @@ interface EnvVars {
   /** Variables de entorno */
   PORT: number;
   STRIPE_SECRET_KEY: string;
+  STRIPE_SUCCESS_URL: string;
+  STRIPE_CANCEL_URL: string;
+  STRIPE_ENDPOINT_SECRET: string;
 }
 
 // Definiendo el esquema para validar las variables de entorno
@@ -15,6 +18,9 @@ const envsSchema = joi
     /** Validaciones */
     PORT: joi.number().required(),
     STRIPE_SECRET_KEY: joi.string().required(),
+    STRIPE_SUCCESS_URL: joi.string().required(),
+    STRIPE_CANCEL_URL: joi.string().required(),
+    STRIPE_ENDPOINT_SECRET: joi.string().required(),
   })
   .unknown(true);
 
@@ -33,4 +39,7 @@ const envVars: EnvVars = value;
 export const envs = {
   port: envVars.PORT,
   stripeSecretKey: envVars.STRIPE_SECRET_KEY,
+  stripeSuccessUrl: envVars.STRIPE_SUCCESS_URL,
+  stripeCancelUrl: envVars.STRIPE_CANCEL_URL,
+  stripeEndpointSecretKey: envVars.STRIPE_ENDPOINT_SECRET,
 };
